@@ -1,5 +1,5 @@
 #!/bin/bash
-php composer.phar install $COMPOSER_ARGS
+php composer-setup.php --install-dir=bin --filename=composer $COMPOSER_ARGS
 php -dmemory_limit=1G bin/magento setup:upgrade
 php -dmemory_limit=1G bin/magento setup:di:compile
 php bin/magento deploy:mode:set developer --skip-compilation

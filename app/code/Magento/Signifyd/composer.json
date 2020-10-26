@@ -1,9 +1,15 @@
 {
     "name": "magento/module-signifyd",
     "description": "Submitting Case Entry to Signifyd on Order Creation",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
     "config": {
         "sort-packages": true
     },
+    "version": "100.3.5",
     "require": {
         "magento/framework": "102.0.*",
         "magento/module-backend": "101.0.*",
@@ -19,11 +25,6 @@
     "suggest": {
         "magento/module-config": "101.1.*"
     },
-    "type": "magento2-module",
-    "license": [
-        "OSL-3.0",
-        "AFL-3.0"
-    ],
     "autoload": {
         "files": [
             "registration.php"
@@ -31,6 +32,6 @@
         "psr-4": {
             "Magento\\Signifyd\\": ""
         }
-    },
-    "version": "100.3.5"
+    }
 }
+

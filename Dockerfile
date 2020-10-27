@@ -3,6 +3,7 @@ FROM registry.redhat.io/ubi8/php-73
 ENV COMPOSER_VERSION=1.10.16
 
 # Add application sources
+COPY etc/php.d/40-zip.ini /etc/php.d/40-zip.ini
 ADD . .
 
 # Install the dependencies

@@ -9,7 +9,7 @@ ADD . .
 # Install the dependencies
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php --version=$COMPOSER_VERSION --install-dir=bin --filename=composer && \
-    php --ini && \
+    ls -lahrt /usr/lib64/php/modules && \
     php bin/composer install && \
     php -dmemory_limit=2G bin/magento setup:upgrade && \
     php -dmemory_limit=2G bin/magento setup:di:compile && \

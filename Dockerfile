@@ -1,12 +1,14 @@
 FROM registry.redhat.io/ubi8/php-73
 
+ENV COMPOSER_VERSION=1.10.16
+
 # Add application sources
 ADD . .
 
 # Install the dependencies
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php composer-setup.php --version=1.10.16 --install-dir=bin --filename=composer && \
-    composer install && \
+    php composer-setup.php --version=$COMPOSER_VERSION --install-dir=bin --filename=composer && \
+    php bin/composer install && \
     php -dmemory_limit=2G bin/magento setup:upgrade && \
     php -dmemory_limit=2G bin/magento setup:di:compile && \
     php bin/magento deploy:mode:set developer --skip-compilation && \

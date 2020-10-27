@@ -1,7 +1,7 @@
 FROM registry.redhat.io/ubi8/php-73
 
 # Add application sources
-ADD app-src .
+ADD . .
 
 # Install the dependencies
 RUN TEMPFILE=$(mktemp) && \

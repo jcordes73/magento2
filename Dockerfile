@@ -1,4 +1,4 @@
-FROM ubi8/php-73
+FROM registry.redhat.io/ubi8/php-73
 
 # Add application sources
 ADD app-src .

@@ -1,4 +1,4 @@
-FROM registry.redhat.io/ubi8/php-72
+FROM registry.redhat.io/ubi8/php-73
 
 ENV COMPOSER_VERSION=1.10.16
 
@@ -9,6 +9,7 @@ ADD . .
 # Install the dependencies
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php --version=$COMPOSER_VERSION --install-dir=bin --filename=composer && \
+    yum install https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-pecl-zip-1.19.1-1.el8.remi.x86_64.rpm && \
     ls -lahrt /usr/lib64/php/modules && \
     php bin/composer install && \
     php -dmemory_limit=2G bin/magento setup:upgrade && \

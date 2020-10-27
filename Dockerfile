@@ -1,4 +1,4 @@
-FROM registry.redhat.io/ubi8/php-73
+FROM registry.redhat.io/ubi8/php-72
 
 ENV COMPOSER_VERSION=1.10.16
 

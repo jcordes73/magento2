@@ -1,7 +1,7 @@
 <?php
 return [
     'backend' => [
-        'frontName' => 'admin_1a48hg'
+        'frontName' => 'admin'
     ],
     'queue' => [
         'consumers_wait_for_messages' => 1

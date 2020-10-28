@@ -4,22 +4,25 @@ ENV COMPOSER_VERSION=1.10.16
 
 USER 0
 
-# Add application sources
+# Copy entitlements and subscription manager configuration
+COPY ./pki-entitlement /etc/pki/entitlement
+COPY ./rhsm-conf /etc/rhsm
+COPY ./rhsm-ca /etc/rhsm/ca
+
+RUN rm /etc/rhsm-host && \
+    yum -y install php-pecl-zip && \
+    rm -rf /etc/pki/entitlement && \
+    rm -rf /etc/rhsm
+
+# Add sources
 COPY etc/php.d/40-zip.ini /etc/php.d/40-zip.ini
 ADD . .
+
+USER 1001
 
 # Install the dependencies
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php --version=$COMPOSER_VERSION --install-dir=bin --filename=composer && \
-    rpm -i https://rpmfind.net/linux/epel/8/Everything/x86_64/Packages/l/libargon2-20171227-3.el8.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/centos/8-stream/BaseOS/x86_64/os/Packages/libselinux-utils-2.9-3.el8.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-runtime-2.0-1.el8.remi.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-common-7.3.23-1.el8.remi.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-cli-7.3.23-1.el8.remi.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-7.3.23-1.el8.remi.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/centos/8-stream/AppStream/x86_64/os/Packages/libzip-1.5.2-1.module_el8.2.0+314+53b99e08.x86_64.rpm && \
-    rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-pecl-zip-1.19.1-1.el8.remi.x86_64.rpm && \
-    ls -lahrt /usr/lib64/php/modules && \
     php bin/composer install && \
     php -dmemory_limit=2G bin/magento setup:upgrade && \
     php -dmemory_limit=2G bin/magento setup:di:compile && \
@@ -29,10 +32,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php bin/magento cache:flush && \
     php bin/magento setup:install --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --use-secure=1 && \
     php bin/magento admin:user:create --admin-user=$MAGENTO_ADMIN_USER --admin-password=$MAGENTO_ADMIN_PASSWORD --admin-email="$MAGENTO_ADMIN_EMAIL" --admin-firstname="$MAGENTO_ADMIN_FIRSTNAME" --admin-lastname="$MAGENTO_ADMIN_LASTNAME"
-
-RUN chown -R 1001:0 .
-
-USER 1001
 
 # Run script uses standard ways to configure the PHP application
 CMD /usr/libexec/s2i/run

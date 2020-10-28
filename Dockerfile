@@ -17,6 +17,7 @@ RUN rm /etc/rhsm-host && \
 # Add sources
 COPY etc/php.d/40-zip.ini /etc/php.d/40-zip.ini
 ADD . .
+RUN chown -R 1001:0 .
 
 USER 1001
 

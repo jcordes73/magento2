@@ -13,6 +13,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php --version=$COMPOSER_VERSION --install-dir=bin --filename=composer && \
     rpm -i https://rpmfind.net/linux/epel/8/Everything/x86_64/Packages/l/libargon2-20171227-3.el8.x86_64.rpm && \
     rpm -i https://rpmfind.net/linux/centos/8-stream/BaseOS/x86_64/os/Packages/libselinux-utils-2.9-3.el8.x86_64.rpm && \
+    rpm -i https://rpmfind.net/linux/openmandriva/4.1/repository/x86_64/unsupported/release/lib64semanage1-2.9-1-omv4000.x86_64.rpm && \
     rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-runtime-2.0-1.el8.remi.x86_64.rpm && \
     rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-common-7.3.23-1.el8.remi.x86_64.rpm && \
     rpm -i https://rpmfind.net/linux/remi/enterprise/8/remi/x86_64/php73-php-cli-7.3.23-1.el8.remi.x86_64.rpm && \

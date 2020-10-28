@@ -27,8 +27,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php bin/composer install && \
     php -dmemory_limit=2G bin/magento setup:upgrade && \
     php -dmemory_limit=2G bin/magento setup:di:compile && \
-    php bin/magento deploy:mode:set developer --skip-compilation && \
-    php bin/magento setup:static-content:deploy -f && \
+    php -dmemory_limit=2G bin/magento deploy:mode:set developer --skip-compilation && \
+    php -dmemory_limit=2G bin/magento setup:static-content:deploy -f && \
     php bin/magento cache:clean && \
     php bin/magento cache:flush && \
     php bin/magento setup:install --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1 --use-secure=1 && \
